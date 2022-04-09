@@ -93,8 +93,8 @@ public class TableauPrincipal {
 	 * Réalise la désinscription d'un étudiant à un cours.
 	 * 
 	 * 
-	 * @param cours L'instance du cours
-	 * @param etud  L'instance de l'étudiant
+	 * @param sigle L'instance du cours
+	 * @param codePermanent  L'instance de l'étudiant
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean desinscrire(String sigle, String codePermanent) {
