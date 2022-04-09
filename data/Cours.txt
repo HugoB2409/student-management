@@ -1,0 +1,6 @@
+//Sigle	Nom	nb Etudiants Max	Prerequis
+LIP1006	Lipsum	30	
+LIP1009	Latex	30	
+LIP1015	Beamer	25	LIP1009 ; LIP1006
+INF1004	Structures de donnees	50	
+MAP1062	Geometrie euclidienne	50	
