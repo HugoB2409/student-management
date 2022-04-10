@@ -29,7 +29,10 @@ public class TableauPrincipal {
 	}
 
 	public void saveModifications() {
-
+		Util util = new Util();
+		Util.getCoursWriter().write(listeCours, new File("data/Cours.txt"));
+		Util.getEtudiantWriter().write(listeEtudiants, new File("data/Etudiants.txt"));
+		util.getInscriptionWriter().write(listeInscriptions, new File("data/Inscriptions.txt"));
 	}
 
 	public List<Cours> findCoursByStudent(String codePermanent) {
@@ -68,12 +71,12 @@ public class TableauPrincipal {
         return null;
 	}
 
-	public void ajouterEtudiant(Etudiant etud) {
-		throw new NotImplementedException();
+	public void ajouterEtudiant(Etudiant etudiant) {
+		listeEtudiants.add(etudiant);
 	}
 
 	public void ajouterCours(Cours cours) {
-		throw new NotImplementedException();
+		listeCours.add(cours);
 	}
 
 	/**
