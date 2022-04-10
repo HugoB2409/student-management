@@ -7,10 +7,10 @@ public class MenuController {
     private final Scanner scanner = new Scanner(System.in);
     private final int exit = 10;
     private TableauPrincipal tp;
-    
+
     public void start() {
         tp = new TableauPrincipal();
-        
+
         int userChoice;
         do {
             printMenu();
@@ -18,7 +18,7 @@ public class MenuController {
             executeOperation(userChoice);
         } while (userChoice != exit);
     }
-    
+
     private void printMenu() {
         System.out.println("-----------------------------------");
         System.out.println("1: Initialiser les informations à partir des fichiers");
@@ -38,19 +38,12 @@ public class MenuController {
     private int getUserChoice() {
         int choice;
         do {
-            try {
-                choice = scanner.nextInt();
-            } catch (Exception e) {
-                choice = -1;
-                scanner.nextLine();
-            }
+            choice = readInt();
 
             if (choice <= 0 || choice > exit) {
                 System.out.println("Choix invalide");
             }
         } while (choice <= 0 || choice > exit);
-        // Flush scanner
-        scanner.nextLine();
         return choice;
     }
 
@@ -76,9 +69,9 @@ public class MenuController {
         System.out.print("Entrez le prenom: ");
         var prenom = scanner.nextLine();
         System.out.print("Entrez le numero de programme: ");
-        var noProgramme = scanner.nextInt();
+        var noProgramme = readInt();
         System.out.print("Entrez le nombre de crédits: ");
-        var credits = scanner.nextInt();
+        var credits = readInt();
 
         return new Etudiant(codePermanent, nom, prenom, noProgramme, credits);
     }
@@ -89,7 +82,7 @@ public class MenuController {
         System.out.print("Entrez le nom: ");
         var nom = scanner.nextLine();
         System.out.print("Entrez le nombre maximum d'étudiant: ");
-        var max = scanner.nextInt();
+        var max = readInt();
 
         // flush scanner
         scanner.nextLine();
@@ -100,7 +93,7 @@ public class MenuController {
             System.out.print("Entrez le sigle des cours prérequis: ");
             preq = scanner.nextLine();
             preqs.add(tp.getCour(preq));
-        } while(!preq.equals(""));
+        } while (!preq.equals(""));
 
         return new Cours(sigle, nom, max, preqs);
     }
@@ -120,5 +113,20 @@ public class MenuController {
     private String getStudentCode() {
         System.out.print("Entrez le code permanent de l'étudiant: ");
         return scanner.nextLine();
+    }
+
+    private int readInt() {
+        Integer num = null;
+        while (num == null) {
+            try {
+                num = scanner.nextInt();
+            } catch (Exception e) {
+                System.out.println("Format invalide veillez entrer un chiffre entier: ");
+                // flush scanner
+                scanner.nextLine();
+            }
+        }
+
+        return num;
     }
 }
