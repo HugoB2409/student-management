@@ -61,10 +61,24 @@ public class MenuController {
             case 3 -> tp.inscrire(getCourseCode(), getStudentCode());
             case 4 -> tp.desinscrire(getCourseCode(), getStudentCode());
             case 5 -> modifyInscription();
-            case 6 -> tp.getEtudiant(getStudentCode());
-            case 7 -> tp.getCour(getCourseCode());
+            case 6 -> getCoursByStudent();
+            case 7 -> getStudentByCours();
             case 8 -> tp.ajouterEtudiant(readStudentInfo());
             case 9 -> tp.ajouterCours(readCourseInfo());
+        }
+    }
+
+    private void getCoursByStudent() {
+        ArrayList<Cours> cours = (ArrayList<Cours>) tp.findCoursByStudent(getStudentCode());
+        for (Cours cour : cours) {
+            System.out.println(cour.getNom());
+        }
+    }
+
+    private void getStudentByCours() {
+        ArrayList<Etudiant> etudiants = (ArrayList<Etudiant>) tp.findStudentByCours(getCourseCode());
+        for (Etudiant etudiant : etudiants) {
+            System.out.println(etudiant.getNom());
         }
     }
 

@@ -1,6 +1,7 @@
 package secretariat;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import secretariat.exception.NotImplementedException;
@@ -29,6 +30,18 @@ public class TableauPrincipal {
 
 	public void saveModifications() {
 
+	}
+
+	public List<Cours> findCoursByStudent(String codePermanent) {
+		ArrayList<Cours> cours = new ArrayList<Cours>();
+		listeInscriptions.stream().filter(inscription -> inscription.getEtudiant().getCodePermanent().equals(codePermanent)).forEach(inscription -> cours.add(inscription.getCours()));
+		return cours;
+	}
+
+	public List<Etudiant> findStudentByCours(String sigle) {
+		ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
+		listeInscriptions.stream().filter(inscription -> inscription.getCours().getSigle().equals(sigle)).forEach(inscription -> etudiants.add(inscription.getEtudiant()));
+		return etudiants;
 	}
 
 	public Etudiant getEtudiant(String codePermanent) {
