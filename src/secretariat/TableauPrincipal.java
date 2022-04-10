@@ -95,7 +95,21 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean inscrire(Cours cours, Etudiant etud) {
-		throw new NotImplementedException();
+		for (Inscription inscription :listeInscriptions) {
+			if (inscription.getCours().getSigle().equals(cours.getSigle())
+					&& inscription.getEtudiant().getCodePermanent().equals(etud.getCodePermanent())) {
+				return false;
+			}
+		}
+
+		// Checks if the max amount of student has been reached and if the student has all the requirements
+		if (findStudentByCours(cours.getSigle()).size() > cours.getMaxEtudiants() ||
+				!findCoursByStudent(etud.getCodePermanent()).containsAll(cours.getPrerequis())) {
+			return false;
+		}
+
+		listeInscriptions.add(new Inscription(cours, etud));
+		return true;
 	}
 
 	/**
@@ -113,8 +127,7 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean inscrire(String sigle, String codePermanent) {
-
-		throw new NotImplementedException();
+		return inscrire(getCour(sigle), getEtudiant(codePermanent));
 	}
 
 	/**

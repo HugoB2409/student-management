@@ -53,7 +53,7 @@ public class MenuController {
         switch (choice) {
             case 1 -> tp.initFromFiles();
             case 2 -> tp.saveModifications();
-            case 3 -> tp.inscrire(getCourseCode(), getStudentCode());
+            case 3 -> inscription();
             case 4 -> tp.desinscrire(getCourseCode(), getStudentCode());
             case 5 -> modifyInscription();
             case 6 -> getCoursByStudent();
@@ -74,6 +74,13 @@ public class MenuController {
         ArrayList<Etudiant> etudiants = (ArrayList<Etudiant>) tp.findStudentByCours(getCourseCode());
         for (Etudiant etudiant : etudiants) {
             System.out.println(etudiant.getNom());
+        }
+    }
+
+    private void inscription() {
+        boolean inscription = tp.inscrire(getCourseCode(), getStudentCode());
+        if(!inscription) {
+            System.out.println("Une erreure est surrvenue lors de l'inscription");
         }
     }
 
