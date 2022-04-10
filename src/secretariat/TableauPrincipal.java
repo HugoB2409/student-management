@@ -132,7 +132,7 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean desinscrire(Cours cours, Etudiant etud) {
-		throw new NotImplementedException();
+		return listeInscriptions.removeIf(inscription -> inscription.getCours().getSigle().equals(cours.getSigle()) && inscription.getEtudiant().getCodePermanent().equals(etud.getCodePermanent()));
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean desinscrire(String sigle, String codePermanent) {
-		throw new NotImplementedException();
+		return desinscrire(getCour(sigle), getEtudiant(codePermanent));
 	}
 
 	public Iterable<Cours> getCours() {
