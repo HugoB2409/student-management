@@ -44,6 +44,8 @@ public class MenuController {
                 System.out.println("Choix invalide");
             }
         } while (choice <= 0 || choice > exit);
+        // flush scanner
+        scanner.nextLine();
         return choice;
     }
 
@@ -99,10 +101,11 @@ public class MenuController {
     }
 
     private void modifyInscription() {
-        System.out.println("Entrez les informations concernant le cours à desinscrire");
-        tp.desinscrire(getCourseCode(), getStudentCode());
-        System.out.println("Entrez les informations concernant le cours à inscrire");
-        tp.inscrire(getCourseCode(), getStudentCode());
+        var studentCode = getStudentCode();
+        System.out.println("Entrez les information du cours à désinscrire");
+        tp.desinscrire(getCourseCode(), studentCode);
+        System.out.println("Entrez les informations du cours à inscrire");
+        tp.inscrire(getCourseCode(), studentCode);
     }
 
     private String getCourseCode() {
