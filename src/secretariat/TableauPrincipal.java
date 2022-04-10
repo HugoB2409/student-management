@@ -1,8 +1,10 @@
 package secretariat;
 
+import java.io.File;
 import java.util.List;
 
 import secretariat.exception.NotImplementedException;
+import secretariat.io.Util;
 
 /**
  * Le tableau principal contient la liste des cours et la liste des étudiants.
@@ -14,11 +16,15 @@ public class TableauPrincipal {
 
 	private List<Cours> listeCours;
 	private List<Etudiant> listeEtudiants;
+	private List<Inscription> listeInscriptions;
 
 	public TableauPrincipal() {}
 
 	public void initFromFiles() {
-
+		Util util = new Util();
+		listeCours = (List<Cours>) Util.getCoursReader().read(new File("data/Cours.txt"));
+		listeEtudiants = (List<Etudiant>) Util.getEtudiantReader().read(new File("data/Etudiants.txt"));
+		listeInscriptions = (List<Inscription>) util.getInscriptionReader(this).read(new File("data/Inscriptions.txt"));
 	}
 
 	public void saveModifications() {
