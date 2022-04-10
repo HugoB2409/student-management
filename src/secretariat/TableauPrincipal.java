@@ -29,7 +29,10 @@ public class TableauPrincipal {
 	}
 
 	public void saveModifications() {
-
+		Util util = new Util();
+		Util.getCoursWriter().write(listeCours, new File("data/Cours.txt"));
+		Util.getEtudiantWriter().write(listeEtudiants, new File("data/Etudiants.txt"));
+		util.getInscriptionWriter().write(listeInscriptions, new File("data/Inscriptions.txt"));
 	}
 
 	public List<Cours> findCoursByStudent(String codePermanent) {
@@ -68,12 +71,12 @@ public class TableauPrincipal {
         return null;
 	}
 
-	public void ajouterEtudiant(Etudiant etud) {
-		throw new NotImplementedException();
+	public void ajouterEtudiant(Etudiant etudiant) {
+		listeEtudiants.add(etudiant);
 	}
 
 	public void ajouterCours(Cours cours) {
-		throw new NotImplementedException();
+		listeCours.add(cours);
 	}
 
 	/**
@@ -129,7 +132,7 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean desinscrire(Cours cours, Etudiant etud) {
-		throw new NotImplementedException();
+		return listeInscriptions.removeIf(inscription -> inscription.getCours().getSigle().equals(cours.getSigle()) && inscription.getEtudiant().getCodePermanent().equals(etud.getCodePermanent()));
 	}
 
 	/**
@@ -141,7 +144,7 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean desinscrire(String sigle, String codePermanent) {
-		throw new NotImplementedException();
+		return desinscrire(getCour(sigle), getEtudiant(codePermanent));
 	}
 
 	public Iterable<Cours> getCours() {

@@ -12,7 +12,7 @@ public class CoursWriter implements Writer<Iterable<Cours>>{
             FileWriter fw = new FileWriter(file);
             for (Cours cours :obj) {
                 var sb = new StringBuilder();
-                if (cours.getPrerequis() != null) {
+                if (cours.getPrerequis() != null && cours.getPrerequis().size() > 0) {
                     cours.getPrerequis().forEach(preq -> sb.append(preq.getSigle()).append(" ; "));
                     sb.delete(sb.lastIndexOf(";") - 1, sb.length());
                 }
