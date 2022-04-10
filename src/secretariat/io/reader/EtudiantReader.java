@@ -21,7 +21,7 @@ public class EtudiantReader implements Reader<Collection<Etudiant>> {
                 try {
                     if (!data.equals("")) {
                         String[] values = data.split("\\t");
-                        if(!values[0].equals("//")) {
+                        if(!values[0].startsWith("//")) {
                             etudiants.add(parse(values));
                         }
 

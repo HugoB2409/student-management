@@ -44,19 +44,9 @@ public class Util {
 	 * Pour la lecture des {@link Inscription Inscriptions}, il faut une visibilité
 	 * vers les {@link Cours} et {@link Etudiant Étudiants} du
 	 * {@link TableauPrincipal}.
-	 * 
-	 * @param tableau
-	 * @return
-	 */	/**
-	 * Pour la lecture des {@link Inscription Inscriptions}, il faut une visibilité
-	 * vers les {@link Cours} et {@link Etudiant Étudiants} du
-	 * {@link TableauPrincipal}.
-	 *
-	 * @param tableau
-	 * @return
 	 */
 	public Reader<Collection<Inscription>> getInscriptionReader(TableauPrincipal tableau) {
-		return new InscriptionReader();
+		return new InscriptionReader(tableau);
 	}
 
 	public Writer<Iterable<Inscription>> getInscriptionWriter() {

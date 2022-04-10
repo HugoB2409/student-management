@@ -30,7 +30,7 @@ public class Etudiant {
 		this.credits = credits;
 		this.moyenneCumul = 0;
 
-		valideEtat();
+		//valideEtat();
 	}
 
 	/**
