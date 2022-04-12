@@ -1,6 +1,9 @@
 package secretariat;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import secretariat.exception.BadInstanciationException;
 import secretariat.exception.NotImplementedException;
@@ -19,7 +22,7 @@ public class Etudiant {
 	 * liste des inscriptions de l'étudiant.
 	 * Indice : vous pouvez créer une classe qui implémente l'interface Iterable
 	 */
-	private transient Iterable<Inscription> inscriptions;
+	private transient List<Inscription> inscriptions = new ArrayList<>();
 
 	public Etudiant(String codePermanent, String nom, String prenom, int noProgramme, int credits) {
 		super();
@@ -83,7 +86,7 @@ public class Etudiant {
 	 * @return
 	 */
 	public Iterator<Inscription> iterator() {
-		throw new NotImplementedException();
+		return inscriptions.iterator();
 	}
 
 	public void setMoyenneCumul(double moyenneCumul) {

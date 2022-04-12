@@ -6,20 +6,20 @@ import java.util.List;
 
 import secretariat.exception.BadInstanciationException;
 
-public class Cours {
+public class Cours implements Iterable<Inscription> {
 
 	private String sigle, nom;
 
 	private int maxEtudiants;
 	private transient int nbEtudiant;
-	private List<Cours> prerequis = new ArrayList<>();
+	private List<Cours> prerequis;
 
 	/**
 	 * Représente la liste des inscriptions TODO On doit pouvoir obtenir un
 	 * {@link Iterator} qui nous permet de parcourir la liste des inscriptions du
 	 * cours.
 	 */
-	private transient Iterable<Inscription> inscriptions;
+	private transient List<Inscription> inscriptions = new ArrayList<>();
 
 	public Cours(String sigle, String nom, int maxEtudiants, List<Cours> prerequis) {
 		this.sigle = sigle;

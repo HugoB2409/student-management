@@ -115,7 +115,12 @@ public class MenuController {
         do {
             System.out.print("Entrez le sigle des cours prérequis: ");
             preq = scanner.nextLine();
-            preqs.add(tp.getCour(preq));
+            Cours cour = tp.getCour(preq);
+            if(cour == null) {
+                System.out.println("Il existe aucun cours comportant ce sigle.");
+            } else {
+                preqs.add(cour);
+            }
         } while (!preq.equals(""));
 
         return new Cours(sigle, nom, max, preqs);

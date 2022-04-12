@@ -15,9 +15,9 @@ import secretariat.io.Util;
  */
 public class TableauPrincipal {
 
-	private List<Cours> listeCours;
-	private List<Etudiant> listeEtudiants;
-	private List<Inscription> listeInscriptions;
+	private List<Cours> listeCours = new ArrayList<>();
+	private List<Etudiant> listeEtudiants = new ArrayList<>();
+	private List<Inscription> listeInscriptions = new ArrayList<>();
 
 	public TableauPrincipal() {}
 

@@ -3,3 +3,5 @@ LIP1009	Latex	30
 LIP1015	Beamer	25	LIP1009 ; LIP1006
 INF1004	Structures de donnees	50	
 MAP1062	Geometrie euclidienne	50	
+2342	were	3	
+44332	test	8	LIP1006 ; LIP1009
