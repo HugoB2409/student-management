@@ -43,6 +43,9 @@ public class Cours implements Iterable<Inscription> {
 	}
 
 	public void addInscription(Inscription inscription) {
+		if (!inscriptions.isEmpty()) {
+			inscriptions.get(inscriptions.size() - 1).setProchainEtudiant(inscription);
+		}
 		inscriptions.add(inscription);
 	}
 

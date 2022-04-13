@@ -31,11 +31,11 @@ public class TestInscriptionsChaines extends BaseTestInscriptions {
 					continue;
 
 				//On vérifie que la prochaine inscription de cours de l'étudiant correspond au prochain dans la chaîne
-				assertTrue(previous.getProchainCours() == current);
+				assertSame(previous.getProchainCours(), current);
 			}
 			
 			if(previous != null)// Une autre fois pour le dernier
-				assertTrue(previous.getProchainCours() == current);
+				assertSame(previous.getProchainCours(), current);
 
 		}
 		
@@ -51,11 +51,11 @@ public class TestInscriptionsChaines extends BaseTestInscriptions {
 					continue;
 
 				//On vérifie que la prochaine inscription d'étudiant de ce cours correspond au prochain dans la chaîne
-				assertTrue(previous.getProchainEtudiant() == current);
+				assertSame(previous.getProchainEtudiant(), current);
 			}
 			
 			if(previous != null)// Une autre fois pour le dernier
-				assertTrue(previous.getProchainEtudiant() == current);
+				assertSame(previous.getProchainEtudiant(), current);
 
 		}
 

@@ -52,11 +52,14 @@ public class Etudiant {
 	}
 
 	public void addInscription(Inscription inscription) {
+		if (!inscriptions.isEmpty()) {
+			inscriptions.get(inscriptions.size() - 1).setProchainCours(inscription);
+		}
 		inscriptions.add(inscription);
 	}
 
 	public void removeInscription(Cours cours) {
-		inscriptions.removeIf(inscription -> inscription.getCours().getSigle() == cours.getSigle());
+		inscriptions.removeIf(inscription -> inscription.getCours().getSigle().equals(cours.getSigle()));
 	}
 
 	public double getMoyenneCumul() {

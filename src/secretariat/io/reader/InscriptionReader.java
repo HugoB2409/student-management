@@ -1,6 +1,5 @@
 package secretariat.io.reader;
 
-import secretariat.Etudiant;
 import secretariat.Inscription;
 import secretariat.TableauPrincipal;
 
@@ -21,6 +20,7 @@ public class InscriptionReader implements Reader<Collection<Inscription>> {
     @Override
     public Collection<Inscription> read(File file) {
         var inscriptions = new ArrayList<Inscription>();
+        Inscription prev = null;
         try {
             myReader = new Scanner(file);
             while (myReader.hasNextLine()) {
@@ -29,7 +29,15 @@ public class InscriptionReader implements Reader<Collection<Inscription>> {
                     if (!data.equals("")) {
                         String[] values = data.split("\\t");
                         if(!values[0].startsWith("//")) {
-                            inscriptions.add(parse(values));
+                            Inscription inscription = parse(values);
+                            inscriptions.add(inscription);
+                            tableau.getEtudiant(inscription.getEtudiant().getCodePermanent()).addInscription(inscription);
+                            tableau.getCour(inscription.getCours().getSigle()).addInscription(inscription);
+                            if (prev != null) {
+                                prev.setProchainCours(inscription);
+                                prev.setProchainEtudiant(inscription);
+                            }
+                            prev = inscription;
                         }
                     }
                 } catch (Exception e) {

@@ -26,14 +26,6 @@ public class TableauPrincipal {
 		listeCours = (List<Cours>) Util.getCoursReader().read(new File("data/Cours.txt"));
 		listeEtudiants = (List<Etudiant>) Util.getEtudiantReader().read(new File("data/Etudiants.txt"));
 		listeInscriptions = (List<Inscription>) util.getInscriptionReader(this).read(new File("data/Inscriptions.txt"));
-		linkInscriptions();
-	}
-
-	private void linkInscriptions() {
-		for (Inscription inscription : listeInscriptions) {
-			inscription.getCours().addInscription(inscription);
-			inscription.getEtudiant().addInscription(inscription);
-		}
 	}
 
 	public void saveModifications() {
@@ -44,13 +36,13 @@ public class TableauPrincipal {
 	}
 
 	public List<Cours> findCoursByStudent(String codePermanent) {
-		ArrayList<Cours> cours = new ArrayList<Cours>();
+		ArrayList<Cours> cours = new ArrayList<>();
 		listeInscriptions.stream().filter(inscription -> inscription.getEtudiant().getCodePermanent().equals(codePermanent)).forEach(inscription -> cours.add(inscription.getCours()));
 		return cours;
 	}
 
 	public List<Etudiant> findStudentByCours(String sigle) {
-		ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
+		ArrayList<Etudiant> etudiants = new ArrayList<>();
 		listeInscriptions.stream().filter(inscription -> inscription.getCours().getSigle().equals(sigle)).forEach(inscription -> etudiants.add(inscription.getEtudiant()));
 		return etudiants;
 	}
