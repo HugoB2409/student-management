@@ -72,11 +72,13 @@ public class TableauPrincipal {
 	}
 
 	public void ajouterEtudiant(Etudiant etudiant) {
-		listeEtudiants.add(etudiant);
+		if (!listeEtudiants.stream().allMatch(e -> e.getCodePermanent().equals(etudiant.getCodePermanent())))
+			listeEtudiants.add(etudiant);
 	}
 
 	public void ajouterCours(Cours cours) {
-		listeCours.add(cours);
+		if (!listeCours.stream().allMatch(c -> c.getSigle().equals(cours.getSigle())))
+			listeCours.add(cours);
 	}
 
 	/**
