@@ -80,12 +80,12 @@ public class TableauPrincipal {
 	}
 
 	public void ajouterEtudiant(Etudiant etudiant) {
-		if (!listeEtudiants.stream().allMatch(e -> e.getCodePermanent().equals(etudiant.getCodePermanent())))
+		if (listeEtudiants != null && listeEtudiants.size() == 0 || !listeEtudiants.stream().allMatch(e -> e.getCodePermanent().equals(etudiant.getCodePermanent())))
 			listeEtudiants.add(etudiant);
 	}
 
 	public void ajouterCours(Cours cours) {
-		if (!listeCours.stream().allMatch(c -> c.getSigle().equals(cours.getSigle())))
+		if (listeCours != null && listeCours.size() == 0 ||  !listeCours.stream().allMatch(c -> c.getSigle().equals(cours.getSigle())))
 			listeCours.add(cours);
 	}
 
