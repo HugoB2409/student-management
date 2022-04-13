@@ -42,6 +42,14 @@ public class Cours implements Iterable<Inscription> {
 
 	}
 
+	public void addInscription(Inscription inscription) {
+		inscriptions.add(inscription);
+	}
+
+	public void removeInscription(Etudiant etudiant) {
+		inscriptions.removeIf(inscription -> inscription.getEtudiant().getCodePermanent().equals(etudiant.getCodePermanent()));
+	}
+
 	public String getSigle() {
 		return sigle;
 	}

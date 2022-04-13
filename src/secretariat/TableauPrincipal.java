@@ -26,6 +26,14 @@ public class TableauPrincipal {
 		listeCours = (List<Cours>) Util.getCoursReader().read(new File("data/Cours.txt"));
 		listeEtudiants = (List<Etudiant>) Util.getEtudiantReader().read(new File("data/Etudiants.txt"));
 		listeInscriptions = (List<Inscription>) util.getInscriptionReader(this).read(new File("data/Inscriptions.txt"));
+		linkInscriptions();
+	}
+
+	private void linkInscriptions() {
+		for (Inscription inscription : listeInscriptions) {
+			inscription.getCours().addInscription(inscription);
+			inscription.getEtudiant().addInscription(inscription);
+		}
 	}
 
 	public void saveModifications() {
@@ -111,6 +119,8 @@ public class TableauPrincipal {
 		}
 
 		listeInscriptions.add(new Inscription(cours, etud));
+		cours.addInscription(new Inscription(cours, etud));
+		etud.addInscription(new Inscription(cours, etud));
 		return true;
 	}
 
@@ -147,6 +157,8 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean desinscrire(Cours cours, Etudiant etud) {
+		cours.removeInscription(etud);
+		etud.removeInscription(cours);
 		return listeInscriptions.removeIf(inscription -> inscription.getCours().getSigle().equals(cours.getSigle()) && inscription.getEtudiant().getCodePermanent().equals(etud.getCodePermanent()));
 	}
 

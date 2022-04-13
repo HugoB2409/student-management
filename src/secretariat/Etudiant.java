@@ -51,6 +51,14 @@ public class Etudiant {
 
 	}
 
+	public void addInscription(Inscription inscription) {
+		inscriptions.add(inscription);
+	}
+
+	public void removeInscription(Cours cours) {
+		inscriptions.removeIf(inscription -> inscription.getCours().getSigle() == cours.getSigle());
+	}
+
 	public double getMoyenneCumul() {
 		return moyenneCumul;
 	}
