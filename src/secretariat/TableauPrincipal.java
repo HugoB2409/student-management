@@ -107,6 +107,12 @@ public class TableauPrincipal {
 	 * @return si l'inscription a pu être réalisée.
 	 */
 	public boolean inscrire(Cours cours, Etudiant etud) {
+		// Checks if the lists contains the course and the student
+		if (!listeEtudiants.contains(etud) || !listeCours.contains(cours)) {
+			return false;
+		}
+
+		// Checks if the inscription already exists
 		for (Inscription inscription :listeInscriptions) {
 			if (inscription.getCours().getSigle().equals(cours.getSigle())
 					&& inscription.getEtudiant().getCodePermanent().equals(etud.getCodePermanent())) {
