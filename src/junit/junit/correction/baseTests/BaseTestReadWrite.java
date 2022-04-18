@@ -28,170 +28,169 @@ import secretariat.io.writer.Writer;
 
 /**
  * Test de la lecture et de l'écriture
- * 
- * @author Louis Hamel
  *
+ * @author Louis Hamel
  */
 class BaseTestReadWrite {
 
-	private static boolean useStrings = false;
+    private static boolean useStrings = false;
 
-	static {
-		BaseTestInscriptions test = new BaseTestInscriptions();
+    static {
+        BaseTestInscriptions test = new BaseTestInscriptions();
 
-		try {
-			test.setUp();
+        try {
+            test.setUp();
 
-			test.testInscrireCoursEtudiant();
+            test.testInscrireCoursEtudiant();
 
-			useStrings = true;
+            useStrings = true;
 
-			test.tearDown();
+            test.tearDown();
 
-		} catch (Exception | AssertionError e) {
-			useStrings = false;
-		}
+        } catch (Exception | AssertionError e) {
+            useStrings = false;
+        }
 
-	}
+    }
 
-	private TableauPrincipal tableauRempli;
+    private TableauPrincipal tableauRempli;
 
-	@BeforeAll
-	static void setupClass() {
-		// On efface les fichiers présents
-		File testDir = new File("./ioTest");
+    @BeforeAll
+    static void setupClass() {
+        // On efface les fichiers présents
+        File testDir = new File("./ioTest");
 
-		System.out.println("BeforeClass");
+        System.out.println("BeforeClass");
 
-		for (File file : testDir.listFiles((f) -> f.isFile())) {
-			file.delete();
-		}
+        for (File file : testDir.listFiles((f) -> f.isFile())) {
+            file.delete();
+        }
 
-		assert testDir.listFiles().length == 0;
+        assert testDir.listFiles().length == 0;
 
-	}
+    }
 
-	@BeforeEach
-	void setUp() throws Exception {
+    @BeforeEach
+    void setUp() throws Exception {
 
-		tableauRempli = makeDefaultTableau(useStrings);
-	}
+        tableauRempli = makeDefaultTableau(useStrings);
+    }
 
-	@AfterEach
-	void tearDown() throws Exception {
-		tableauRempli = null;
-	}
+    @AfterEach
+    void tearDown() throws Exception {
+        tableauRempli = null;
+    }
 
-	@Test
-	void testGetEtudiantReader() throws IOException {
-		File f = new File("ioTest/Etudiants.txt");
+    @Test
+    void testGetEtudiantReader() throws IOException {
+        File f = new File("ioTest/Etudiants.txt");
 
-		Iterable<Etudiant> etudiants = tableauRempli.getEtudiants();
+        Iterable<Etudiant> etudiants = tableauRempli.getEtudiants();
 
-		Writer<Iterable<Etudiant>> writer = Util.getEtudiantWriter();
-		Reader<Collection<Etudiant>> reader = Util.getEtudiantReader();
+        Writer<Iterable<Etudiant>> writer = Util.getEtudiantWriter();
+        Reader<Collection<Etudiant>> reader = Util.getEtudiantReader();
 
-		writer.write(etudiants, f);
+        writer.write(etudiants, f);
 
-		if (!f.exists())
-			fail("Le fichier n'a pas été créé");
+        if (!f.exists())
+            fail("Le fichier n'a pas été créé");
 
-		etudiants = makeDefaultTableau(useStrings).getEtudiants();
+        etudiants = makeDefaultTableau(useStrings).getEtudiants();
 
-		Collection<Etudiant> etudiantsLus = reader.read(f);
+        Collection<Etudiant> etudiantsLus = reader.read(f);
 
-		assertTrue(allInAll(etudiants, etudiantsLus, BaseTestReadWrite::comparateurEtudiant));
+        assertTrue(allInAll(etudiants, etudiantsLus, BaseTestReadWrite::comparateurEtudiant));
 
-	}
+    }
 
-	@Test
-	void testGetCoursReader() throws IOException {
-		File f = new File("ioTest/Cours.txt");
+    @Test
+    void testGetCoursReader() throws IOException {
+        File f = new File("ioTest/Cours.txt");
 
-		Iterable<Cours> lesCours = tableauRempli.getCours();
+        Iterable<Cours> lesCours = tableauRempli.getCours();
 
-		Writer<Iterable<Cours>> writer = Util.getCoursWriter();
-		Reader<Collection<Cours>> reader = Util.getCoursReader();
+        Writer<Iterable<Cours>> writer = Util.getCoursWriter();
+        Reader<Collection<Cours>> reader = Util.getCoursReader();
 
-		writer.write(lesCours, f);
+        writer.write(lesCours, f);
 
-		if (!f.exists())
-			fail("Le fichier n'a pas été créé");
+        if (!f.exists())
+            fail("Le fichier n'a pas été créé");
 
-		lesCours = makeDefaultTableau(useStrings).getCours();
+        lesCours = makeDefaultTableau(useStrings).getCours();
 
-		Collection<Cours> lesCoursLus = reader.read(f);
+        Collection<Cours> lesCoursLus = reader.read(f);
 
-		assertTrue(allInAll(lesCours, lesCoursLus, BaseTestReadWrite::comparateurCours));
+        assertTrue(allInAll(lesCours, lesCoursLus, BaseTestReadWrite::comparateurCours));
 
-	}
+    }
 
-	@Test
-	void testGetInscriptionReader() throws IOException {
+    @Test
+    void testGetInscriptionReader() throws IOException {
 
-		File f = new File("ioTest/Inscriptions.txt");
+        File f = new File("ioTest/Inscriptions.txt");
 
-		Util util = new Util();
+        Util util = new Util();
 
-		List<Inscription> inscriptions = BaseTestInscriptions.collectInscriptions(tableauRempli);
+        List<Inscription> inscriptions = BaseTestInscriptions.collectInscriptions(tableauRempli);
 
-		TableauPrincipal tableauSansInscrip = makeDefaultTabEtudCours();
+        TableauPrincipal tableauSansInscrip = makeDefaultTabEtudCours();
 
-		Writer<Iterable<Inscription>> writer = util.getInscriptionWriter();
-		Reader<Collection<Inscription>> reader = util.getInscriptionReader(tableauSansInscrip);
+        Writer<Iterable<Inscription>> writer = util.getInscriptionWriter();
+        Reader<Collection<Inscription>> reader = util.getInscriptionReader(tableauSansInscrip);
 
-		writer.write(inscriptions, f);
+        writer.write(inscriptions, f);
 
-		if (!f.exists())
-			fail("Le fichier n'a pas été créé");
+        if (!f.exists())
+            fail("Le fichier n'a pas été créé");
 
-		// Recréation des inscriptions au cas où le reader modifierait l'état de la
-		// liste
-		inscriptions = BaseTestInscriptions.collectInscriptions(makeDefaultTableau(useStrings));
+        // Recréation des inscriptions au cas où le reader modifierait l'état de la
+        // liste
+        inscriptions = BaseTestInscriptions.collectInscriptions(makeDefaultTableau(useStrings));
 
-		Collection<Inscription> inscriptLues = reader.read(f);
+        Collection<Inscription> inscriptLues = reader.read(f);
 
-		assertTrue(allInAll(inscriptions, inscriptLues, BaseTestReadWrite::comparateurInscriptions));
+        assertTrue(allInAll(inscriptions, inscriptLues, BaseTestReadWrite::comparateurInscriptions));
 
-	}
+    }
 
-	public static <T> boolean allInAll(Iterable<T> former, Iterable<T> latter, PredicateOnTwo<T> comparateur) {
+    public static <T> boolean allInAll(Iterable<T> former, Iterable<T> latter, PredicateOnTwo<T> comparateur) {
 
-		// On vérifie que toutes les inscriptions de l'une sont dans l'autre
-		for (T t : former) {
-			if (!contains(latter, comparateur.reduce(t)))
-				return false;
-		}
+        // On vérifie que toutes les inscriptions de l'une sont dans l'autre
+        for (T t : former) {
+            if (!contains(latter, comparateur.reduce(t)))
+                return false;
+        }
 
-		for (T t : latter) {
-			if (!contains(former, comparateur.reduce(t)))
-				return false;
-		}
+        for (T t : latter) {
+            if (!contains(former, comparateur.reduce(t)))
+                return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	public static Predicate<Inscription> comparateurInscriptions(Inscription first) {
-		return (second) -> {
+    public static Predicate<Inscription> comparateurInscriptions(Inscription first) {
+        return (second) -> {
 
-			boolean equals = true;
-			equals &= first.getEtudiant().getCodePermanent().equals(second.getEtudiant().getCodePermanent());
-			equals &= first.getCours().getSigle().equals(second.getCours().getSigle());
+            boolean equals = true;
+            equals &= first.getEtudiant().getCodePermanent().equals(second.getEtudiant().getCodePermanent());
+            equals &= first.getCours().getSigle().equals(second.getCours().getSigle());
 
-			return equals;
-		};
-	}
+            return equals;
+        };
+    }
 
-	public static Predicate<Cours> comparateurCours(Cours first) {
-		return second -> first.getSigle().equals(second.getSigle());
-	}
+    public static Predicate<Cours> comparateurCours(Cours first) {
+        return second -> first.getSigle().equals(second.getSigle());
+    }
 
-	public static Predicate<Etudiant> comparateurEtudiant(Etudiant first) {
-		return second -> first.getCodePermanent().equals(second.getCodePermanent());
-	}
+    public static Predicate<Etudiant> comparateurEtudiant(Etudiant first) {
+        return second -> first.getCodePermanent().equals(second.getCodePermanent());
+    }
 
-	interface PredicateOnTwo<T> {
-		public Predicate<T> reduce(T elem);
-	}
+    interface PredicateOnTwo<T> {
+        public Predicate<T> reduce(T elem);
+    }
 
 }

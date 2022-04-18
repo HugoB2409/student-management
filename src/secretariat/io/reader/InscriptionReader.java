@@ -10,8 +10,7 @@ import java.util.Collection;
 import java.util.Scanner;
 
 public class InscriptionReader implements Reader<Collection<Inscription>> {
-    private Scanner myReader;
-    private TableauPrincipal tableau;
+    private final TableauPrincipal tableau;
 
     public InscriptionReader(TableauPrincipal tableau) {
         this.tableau = tableau;
@@ -22,7 +21,7 @@ public class InscriptionReader implements Reader<Collection<Inscription>> {
         var inscriptions = new ArrayList<Inscription>();
         Inscription prev = null;
         try {
-            myReader = new Scanner(file);
+            Scanner myReader = new Scanner(file);
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 try {

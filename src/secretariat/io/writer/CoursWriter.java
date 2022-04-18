@@ -5,12 +5,12 @@ import secretariat.Cours;
 import java.io.File;
 import java.io.FileWriter;
 
-public class CoursWriter implements Writer<Iterable<Cours>>{
+public class CoursWriter implements Writer<Iterable<Cours>> {
     @Override
     public void write(Iterable<Cours> obj, File file) {
         try {
             FileWriter fw = new FileWriter(file);
-            for (Cours cours :obj) {
+            for (Cours cours : obj) {
                 var sb = new StringBuilder();
                 if (cours.getPrerequis() != null && cours.getPrerequis().size() > 0) {
                     cours.getPrerequis().forEach(preq -> sb.append(preq.getSigle()).append(" ; "));
@@ -22,6 +22,7 @@ public class CoursWriter implements Writer<Iterable<Cours>>{
                 fw.flush();
             }
             fw.close();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 }

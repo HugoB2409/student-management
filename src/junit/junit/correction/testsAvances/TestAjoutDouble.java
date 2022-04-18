@@ -20,266 +20,265 @@ import secretariat.TableauPrincipal;
  * On va ici tester que le tableau n'accepte pas les doublons, ni pour les
  * cours, ni les étudiants, ni les inscriptions. On va aussi tester le retrait
  * d'une inscription inexistante
- * 
- * @author Louis Hamel
  *
+ * @author Louis Hamel
  */
 class TestAjoutDouble {
 
-	private TableauPrincipal tableau;
+    private TableauPrincipal tableau;
 
-	@BeforeEach
-	void setUp() throws Exception {
-		tableau = makeDefaultTabEtudCours();
-	}
+    @BeforeEach
+    void setUp() throws Exception {
+        tableau = makeDefaultTabEtudCours();
+    }
 
-	@AfterEach
-	void tearDown() throws Exception {
-	}
+    @AfterEach
+    void tearDown() throws Exception {
+    }
 
-	@Test
-	void testAjouterEtudiant() {
+    @Test
+    void testAjouterEtudiant() {
 
-		Iterable<Etudiant> etudiants = tableau.getEtudiants();
+        Iterable<Etudiant> etudiants = tableau.getEtudiants();
 
-		for (Etudiant etudiant : etudiants) {
+        for (Etudiant etudiant : etudiants) {
 
-			try {
-				tableau.ajouterEtudiant(etudiant);
+            try {
+                tableau.ajouterEtudiant(etudiant);
 
-			} catch (Exception e) {
+            } catch (Exception e) {
 
-			}
+            }
 
-			try {
-				Etudiant bidon = new Etudiant(etudiant.getCodePermanent(), "bidon", "bidon", 1, 1);
-				tableau.ajouterEtudiant(bidon);
+            try {
+                Etudiant bidon = new Etudiant(etudiant.getCodePermanent(), "bidon", "bidon", 1, 1);
+                tableau.ajouterEtudiant(bidon);
 
-			} catch (Exception e) {
+            } catch (Exception e) {
 
-			}
+            }
 
-			int occurences = 0;
+            int occurences = 0;
 
-			for (Etudiant std : tableau.getEtudiants()) {
-				if (std.getCodePermanent().equals(etudiant.getCodePermanent()))
-					occurences++;
-			}
-			assertTrue(occurences < 2, "CP = " + etudiant.getCodePermanent() + " présent " + occurences + " fois.");
+            for (Etudiant std : tableau.getEtudiants()) {
+                if (std.getCodePermanent().equals(etudiant.getCodePermanent()))
+                    occurences++;
+            }
+            assertTrue(occurences < 2, "CP = " + etudiant.getCodePermanent() + " présent " + occurences + " fois.");
 
-		}
+        }
 
-	}
+    }
 
-	@Test
-	void testAjouterCours() {
+    @Test
+    void testAjouterCours() {
 
-		Iterable<Cours> lesCours = tableau.getCours();
+        Iterable<Cours> lesCours = tableau.getCours();
 
-		for (Cours cours : lesCours) {
+        for (Cours cours : lesCours) {
 
-			try {
-				tableau.ajouterCours(cours);
+            try {
+                tableau.ajouterCours(cours);
 
-			} catch (Exception e) {
+            } catch (Exception e) {
 
-			}
+            }
 
-			try {
-				Cours bidon = new Cours(cours.getSigle(), "bidon", 1, new ArrayList<Cours>());
-				tableau.ajouterCours(bidon);
+            try {
+                Cours bidon = new Cours(cours.getSigle(), "bidon", 1, new ArrayList<Cours>());
+                tableau.ajouterCours(bidon);
 
-			} catch (Exception e) {
+            } catch (Exception e) {
 
-			}
+            }
 
-			int occurences = 0;
+            int occurences = 0;
 
-			for (Cours crs : tableau.getCours()) {
-				if (crs.getSigle().equals(cours.getSigle()))
-					occurences++;
-			}
-			assertTrue(occurences < 2, "Sigle = " + cours.getSigle() + " présent " + occurences + " fois.");
+            for (Cours crs : tableau.getCours()) {
+                if (crs.getSigle().equals(cours.getSigle()))
+                    occurences++;
+            }
+            assertTrue(occurences < 2, "Sigle = " + cours.getSigle() + " présent " + occurences + " fois.");
 
-		}
+        }
 
-	}
+    }
 
-	@Test
-	void testInscrireCoursEtudiant() {
+    @Test
+    void testInscrireCoursEtudiant() {
 
-		tableau = makeDefaultTableau(false);
+        tableau = makeDefaultTableau(false);
 
-		assertCoherence(tableau);
+        assertCoherence(tableau);
 
-		for (Inscription inscript : collectInscriptions(tableau)) {
+        for (Inscription inscript : collectInscriptions(tableau)) {
 
-			boolean inscrit = tableau.inscrire(inscript.getCours(), inscript.getEtudiant());
+            boolean inscrit = tableau.inscrire(inscript.getCours(), inscript.getEtudiant());
 
-			assertCoherence(tableau);
+            assertCoherence(tableau);
 
-			int occurences = 0;
-			// On compte le nombre d'inscriptions identiques à inscript
+            int occurences = 0;
+            // On compte le nombre d'inscriptions identiques à inscript
 
-			for (Inscription inscription : collectInscriptions(tableau)) {
+            for (Inscription inscription : collectInscriptions(tableau)) {
 
-				boolean equals = inscript.getCours().getSigle().equals(inscription.getCours().getSigle());
-				equals &= inscript.getEtudiant().getCodePermanent()
-						.equals(inscription.getEtudiant().getCodePermanent());
-				if (equals)
-					occurences++;
-			}
+                boolean equals = inscript.getCours().getSigle().equals(inscription.getCours().getSigle());
+                equals &= inscript.getEtudiant().getCodePermanent()
+                        .equals(inscription.getEtudiant().getCodePermanent());
+                if (equals)
+                    occurences++;
+            }
 
-			assertEquals(1, occurences);
+            assertEquals(1, occurences);
 
-			assertFalse(inscrit, "TableauPrincipal.inscrire(Cours, Etudiant) a retourné vrai sur un doublon");
+            assertFalse(inscrit, "TableauPrincipal.inscrire(Cours, Etudiant) a retourné vrai sur un doublon");
 
-		}
+        }
 
-		assertCoherence(tableau);
-	}
+        assertCoherence(tableau);
+    }
 
-	/**
-	 * On va essayer d'inscrire un cours et un étudiant absents de la liste
-	 */
-	@Test
-	void testInscrireHack() {
+    /**
+     * On va essayer d'inscrire un cours et un étudiant absents de la liste
+     */
+    @Test
+    void testInscrireHack() {
 
-		tableau = makeDefaultTableau(false);
+        tableau = makeDefaultTableau(false);
 
-		Cours crs;
-		Etudiant std;
-		crs = getElem(tableau.getCours()::iterator, 1);
+        Cours crs;
+        Etudiant std;
+        crs = getElem(tableau.getCours()::iterator, 1);
 
-		std = getElem(tableau.getEtudiants()::iterator, 1);
+        std = getElem(tableau.getEtudiants()::iterator, 1);
 
-		Cours coursHack = new Cours(crs.getSigle(), "Bidon", 1, new ArrayList<Cours>());
-		Etudiant stdHack = new Etudiant(std.getCodePermanent(), "Bidon", "Bidon", 1, 1);
+        Cours coursHack = new Cours(crs.getSigle(), "Bidon", 1, new ArrayList<Cours>());
+        Etudiant stdHack = new Etudiant(std.getCodePermanent(), "Bidon", "Bidon", 1, 1);
 
-		boolean aInscrit = tableau.inscrire(crs, stdHack);
+        boolean aInscrit = tableau.inscrire(crs, stdHack);
 
-		assertCoherence(tableau);
-		
-		assertFalse(aInscrit);
+        assertCoherence(tableau);
 
-		aInscrit=tableau.inscrire(coursHack, std);
+        assertFalse(aInscrit);
 
-		assertCoherence(tableau);
+        aInscrit = tableau.inscrire(coursHack, std);
 
-		assertFalse(aInscrit);
+        assertCoherence(tableau);
 
-		boolean desinscrire = tableau.desinscrire(coursHack, stdHack);
+        assertFalse(aInscrit);
 
-		assertCoherence(tableau);
+        boolean desinscrire = tableau.desinscrire(coursHack, stdHack);
 
-		assertFalse(desinscrire);
-	}
+        assertCoherence(tableau);
 
-	public static <T> T getElem(Iterable<T> elem, int index) {
-		int i = 0;
+        assertFalse(desinscrire);
+    }
 
-		for (T t : elem) {
-			if (i++ == index)
-				return t;
-		}
+    public static <T> T getElem(Iterable<T> elem, int index) {
+        int i = 0;
 
-		return null;
+        for (T t : elem) {
+            if (i++ == index)
+                return t;
+        }
 
-	}
+        return null;
 
-	public static void assertCoherence(TableauPrincipal tab) {
-		assertInscriptionsInBothLists(tab);
-		assertRelatedInscriptions(tab);
-	}
+    }
 
-	@Test
-	void testInscrireStringString() {
+    public static void assertCoherence(TableauPrincipal tab) {
+        assertInscriptionsInBothLists(tab);
+        assertRelatedInscriptions(tab);
+    }
 
-		tableau = makeDefaultTableau(false);
+    @Test
+    void testInscrireStringString() {
 
-		assertCoherence(tableau);
+        tableau = makeDefaultTableau(false);
 
-		for (Inscription inscript : collectInscriptions(tableau)) {
+        assertCoherence(tableau);
 
-			boolean inscrit = tableau.inscrire(inscript.getCours().getSigle(),
-					inscript.getEtudiant().getCodePermanent());
+        for (Inscription inscript : collectInscriptions(tableau)) {
 
-			assertCoherence(tableau);
+            boolean inscrit = tableau.inscrire(inscript.getCours().getSigle(),
+                    inscript.getEtudiant().getCodePermanent());
 
-			int occurences = 0;
-			// On compte le nombre d'inscriptions identiques à inscript
+            assertCoherence(tableau);
 
-			for (Inscription inscription : collectInscriptions(tableau)) {
+            int occurences = 0;
+            // On compte le nombre d'inscriptions identiques à inscript
 
-				boolean equals = inscript.getCours().getSigle().equals(inscription.getCours().getSigle());
-				equals &= inscript.getEtudiant().getCodePermanent()
-						.equals(inscription.getEtudiant().getCodePermanent());
-				if (equals)
-					occurences++;
-			}
+            for (Inscription inscription : collectInscriptions(tableau)) {
 
-			assertEquals(1, occurences);
+                boolean equals = inscript.getCours().getSigle().equals(inscription.getCours().getSigle());
+                equals &= inscript.getEtudiant().getCodePermanent()
+                        .equals(inscription.getEtudiant().getCodePermanent());
+                if (equals)
+                    occurences++;
+            }
 
-			assertFalse(inscrit, "TableauPrincipal.inscrire(Cours, Etudiant) a retourné vrai sur un doublon");
+            assertEquals(1, occurences);
 
-		}
+            assertFalse(inscrit, "TableauPrincipal.inscrire(Cours, Etudiant) a retourné vrai sur un doublon");
 
-		assertCoherence(tableau);
+        }
 
-	}
+        assertCoherence(tableau);
 
-	@Test
-	void testDesinscrireCoursEtudiant() {
+    }
 
-		Cours crs;
-		Etudiant std;
-		crs = tableau.getCours().iterator().next();
-		std = tableau.getEtudiants().iterator().next();
+    @Test
+    void testDesinscrireCoursEtudiant() {
 
-		boolean estDesinscrit = tableau.desinscrire(crs, std);
+        Cours crs;
+        Etudiant std;
+        crs = tableau.getCours().iterator().next();
+        std = tableau.getEtudiants().iterator().next();
 
-		assertCoherence(tableau);
+        boolean estDesinscrit = tableau.desinscrire(crs, std);
 
-		assertFalse(estDesinscrit);
+        assertCoherence(tableau);
 
-	}
+        assertFalse(estDesinscrit);
 
-	@Test
-	void testDesinscrireStringString() {
+    }
 
-		Cours crs;
-		Etudiant std;
-		crs = tableau.getCours().iterator().next();
-		std = tableau.getEtudiants().iterator().next();
+    @Test
+    void testDesinscrireStringString() {
 
-		boolean estDesinscrit = tableau.desinscrire(crs.getSigle(), std.getCodePermanent());
+        Cours crs;
+        Etudiant std;
+        crs = tableau.getCours().iterator().next();
+        std = tableau.getEtudiants().iterator().next();
 
-		assertCoherence(tableau);
+        boolean estDesinscrit = tableau.desinscrire(crs.getSigle(), std.getCodePermanent());
 
-		assertFalse(estDesinscrit);
+        assertCoherence(tableau);
 
-	}
+        assertFalse(estDesinscrit);
 
-	@Test
-	void testDesinscrireAbsent() {
+    }
 
-		Cours crs;
-		Etudiant std;
-		crs = new Cours("BID0666", "Bidon absent", 5, new ArrayList<>());
-		std = new Etudiant("BIDO48855885", "Bidon", "Absent", 2553, 2);
+    @Test
+    void testDesinscrireAbsent() {
 
-		boolean estDesinscrit = tableau.desinscrire(crs.getSigle(), std.getCodePermanent());
+        Cours crs;
+        Etudiant std;
+        crs = new Cours("BID0666", "Bidon absent", 5, new ArrayList<>());
+        std = new Etudiant("BIDO48855885", "Bidon", "Absent", 2553, 2);
 
-		assertCoherence(tableau);
+        boolean estDesinscrit = tableau.desinscrire(crs.getSigle(), std.getCodePermanent());
 
-		assertFalse(estDesinscrit);
+        assertCoherence(tableau);
 
-		estDesinscrit = tableau.desinscrire(crs, std);
+        assertFalse(estDesinscrit);
 
-		assertCoherence(tableau);
+        estDesinscrit = tableau.desinscrire(crs, std);
 
-		assertFalse(estDesinscrit);
+        assertCoherence(tableau);
 
-	}
+        assertFalse(estDesinscrit);
+
+    }
 
 }

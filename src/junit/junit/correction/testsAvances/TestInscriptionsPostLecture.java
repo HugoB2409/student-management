@@ -15,66 +15,66 @@ import secretariat.Etudiant;
 import secretariat.Inscription;
 import secretariat.TableauPrincipal;
 import secretariat.io.Util;
+
 /**
  * Vérifie que le tableau reste cohérent après la lecture.
- * 
- * @author Louis Hamel
  *
+ * @author Louis Hamel
  */
 class TestInscriptionsPostLecture {
 
-	@BeforeEach
-	protected void setUp() throws Exception {
+    @BeforeEach
+    protected void setUp() throws Exception {
 
-	}
+    }
 
-	@Test
-	void test() throws IOException {
+    @Test
+    void test() throws IOException {
 
-		TableauPrincipal tableau = makeDefaultTableau(true);
+        TableauPrincipal tableau = makeDefaultTableau(true);
 
-		File f = new File("ioTest/AdvancedEtudiants.txt");
+        File f = new File("ioTest/AdvancedEtudiants.txt");
 
-		Util.getEtudiantWriter().write(tableau.getEtudiants(), f);
-		Collection<Etudiant> stds = Util.getEtudiantReader().read(f);
+        Util.getEtudiantWriter().write(tableau.getEtudiants(), f);
+        Collection<Etudiant> stds = Util.getEtudiantReader().read(f);
 
-		f = new File("ioTest/AdvancedCours.txt");
+        f = new File("ioTest/AdvancedCours.txt");
 
-		Util.getCoursWriter().write(tableau.getCours(), f);
-		Collection<Cours> lesCours = Util.getCoursReader().read(f);
+        Util.getCoursWriter().write(tableau.getCours(), f);
+        Collection<Cours> lesCours = Util.getCoursReader().read(f);
 
-		f = new File("ioTest/AdvancedInscriptions.txt");
+        f = new File("ioTest/AdvancedInscriptions.txt");
 
-		tableau = new TableauPrincipal();
-		addAll(tableau, lesCours, stds);
+        tableau = new TableauPrincipal();
+        addAll(tableau, lesCours, stds);
 
-		TestAjoutDouble.assertCoherence(tableau);
-		
-		new Util().getInscriptionWriter().write(collectInscriptions(tableau), f);
-		Collection<Inscription> inscriptions = new Util().getInscriptionReader(tableau).read(f);
+        TestAjoutDouble.assertCoherence(tableau);
 
-		if (collectInscriptions(tableau).size() == 0) {
-			for (Inscription inscription : inscriptions) {
-				tableau.inscrire(inscription.getCours().getSigle(), inscription.getEtudiant().getCodePermanent());
-			}
-		} else {
-			System.out.println("Les inscriptions ont été réalisées lors de la lecture");
-		}
+        new Util().getInscriptionWriter().write(collectInscriptions(tableau), f);
+        Collection<Inscription> inscriptions = new Util().getInscriptionReader(tableau).read(f);
 
-		TestAjoutDouble.assertCoherence(tableau);
+        if (collectInscriptions(tableau).size() == 0) {
+            for (Inscription inscription : inscriptions) {
+                tableau.inscrire(inscription.getCours().getSigle(), inscription.getEtudiant().getCodePermanent());
+            }
+        } else {
+            System.out.println("Les inscriptions ont été réalisées lors de la lecture");
+        }
 
-	}
+        TestAjoutDouble.assertCoherence(tableau);
 
-	public void addAll(TableauPrincipal tab, Iterable<Cours> lesCours, Iterable<Etudiant> stds) {
+    }
 
-		for (Etudiant etudiant : stds) {
-			tab.ajouterEtudiant(etudiant);
-		}
+    public void addAll(TableauPrincipal tab, Iterable<Cours> lesCours, Iterable<Etudiant> stds) {
 
-		for (Cours cours : lesCours) {
-			tab.ajouterCours(cours);
-		}
+        for (Etudiant etudiant : stds) {
+            tab.ajouterEtudiant(etudiant);
+        }
 
-	}
+        for (Cours cours : lesCours) {
+            tab.ajouterCours(cours);
+        }
+
+    }
 
 }

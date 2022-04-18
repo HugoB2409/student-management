@@ -79,7 +79,7 @@ public class MenuController {
 
     private void inscription() {
         boolean inscription = tp.inscrire(getCourseCode(), getStudentCode());
-        if(!inscription) {
+        if (!inscription) {
             System.out.println("Une erreure est surrvenue lors de l'inscription");
         }
     }
@@ -116,7 +116,7 @@ public class MenuController {
             System.out.print("Entrez le sigle des cours prérequis: ");
             preq = scanner.nextLine();
             Cours cour = tp.getCour(preq);
-            if(cour == null) {
+            if (cour == null) {
                 System.out.println("Il existe aucun cours comportant ce sigle.");
             } else {
                 preqs.add(cour);

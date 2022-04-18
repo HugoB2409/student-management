@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class CoursReader implements Reader<Collection<Cours>> {
     ArrayList<Cours> cours = new ArrayList<Cours>();
@@ -21,8 +20,8 @@ public class CoursReader implements Reader<Collection<Cours>> {
                 try {
                     if (!data.equals("")) {
                         String[] values = data.split("\\t");
-                        if(!values[0].startsWith("//")) {
-                           cours.add(parse(values));
+                        if (!values[0].startsWith("//")) {
+                            cours.add(parse(values));
                         }
                     }
                 } catch (Exception e) {
@@ -37,7 +36,7 @@ public class CoursReader implements Reader<Collection<Cours>> {
 
     private Cours parse(String[] values) {
         ArrayList<Cours> prerequis = new ArrayList<>();
-        if(values.length == 4) {
+        if (values.length == 4) {
             for (String sigle : values[3].split(" ; ")) {
                 prerequis.add(cours.stream().filter(cour -> cour.getSigle().equals(sigle)).toList().get(0));
             }
