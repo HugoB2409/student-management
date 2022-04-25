@@ -5,6 +5,12 @@ import secretariat.Inscription;
 import java.io.File;
 import java.io.FileWriter;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe utilisé pour écrire dans le fichier  Inscriptions.txt
+ */
 public class InscriptionWriter implements Writer<Iterable<Inscription>> {
     @Override
     public void write(Iterable<Inscription> obj, File file) {

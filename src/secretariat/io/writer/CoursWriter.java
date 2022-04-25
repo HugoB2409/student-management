@@ -5,6 +5,12 @@ import secretariat.Cours;
 import java.io.File;
 import java.io.FileWriter;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe utilisé pour écrire dans le fichier  Cours.txt
+ */
 public class CoursWriter implements Writer<Iterable<Cours>> {
     @Override
     public void write(Iterable<Cours> obj, File file) {

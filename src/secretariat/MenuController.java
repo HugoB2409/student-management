@@ -3,6 +3,12 @@ package secretariat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe représentant l'ensemble des intéraction a la console
+ */
 public class MenuController {
     private final Scanner scanner = new Scanner(System.in);
     private final int exit = 10;

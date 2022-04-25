@@ -29,10 +29,15 @@ public class TableauPrincipal {
     }
 
     public void saveModifications() {
-        //Util util = new Util();
         Util.getCoursWriter().write(listeCours, new File("data/Cours.txt"));
         Util.getEtudiantWriter().write(listeEtudiants, new File("data/Etudiants.txt"));
-        //util.getInscriptionWriter().write(listeInscriptions, new File("data/Inscriptions.txt"));
+        List<Inscription> inscriptions = new ArrayList<>();
+        for (Cours cours : listeCours) {
+            for (Inscription cour : cours) {
+                inscriptions.add(cour);
+            }
+        }
+        new Util().getInscriptionWriter().write(inscriptions, new File("data/Inscriptions.txt"));
     }
 
     public List<Cours> findCoursByStudent(String codePermanent) {

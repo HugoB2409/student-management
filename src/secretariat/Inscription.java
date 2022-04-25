@@ -8,8 +8,8 @@ package secretariat;
  */
 public class Inscription {
 
-    private Cours cours;
-    private Etudiant etudiant;
+    private final Cours cours;
+    private final Etudiant etudiant;
 
     /*
      * Note: Transient signifie juste que ces éléments ne devraient pas être

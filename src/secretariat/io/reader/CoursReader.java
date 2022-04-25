@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe utilisé pour lire dans le fichier  Cours.txt
+ */
 public class CoursReader implements Reader<Collection<Cours>> {
     ArrayList<Cours> cours = new ArrayList<Cours>();
 

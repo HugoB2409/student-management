@@ -8,9 +8,17 @@ import java.util.List;
 import secretariat.exception.BadInstanciationException;
 import secretariat.exception.NotImplementedException;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe représentant un etudiant
+ */
 public class Etudiant {
 
-    private String codePermanent, nom, prenom;
+    private final String codePermanent;
+    private final String nom;
+    private final String prenom;
     private int noProgramme, credits;
     private double moyenneCumul;
 

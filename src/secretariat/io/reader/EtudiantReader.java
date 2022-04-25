@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe utilisé pour lire dans le fichier  Etudiants.txt
+ */
 public class EtudiantReader implements Reader<Collection<Etudiant>> {
 
     @Override

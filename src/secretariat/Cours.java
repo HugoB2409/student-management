@@ -6,6 +6,12 @@ import java.util.List;
 
 import secretariat.exception.BadInstanciationException;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe représentant un cours
+ */
 public class Cours implements Iterable<Inscription> {
 
     private final String sigle;

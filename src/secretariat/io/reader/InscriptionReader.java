@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 
+/**
+ * Hugo Bélanger
+ * Maxime Desmarais
+ *
+ * Classe utilisé pour lire dans le fichier  Inscriptions.txt
+ */
 public class InscriptionReader implements Reader<Collection<Inscription>> {
     private final TableauPrincipal tableau;
 
